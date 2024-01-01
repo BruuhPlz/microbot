@@ -15,8 +15,13 @@ import net.runelite.client.plugins.microbot.agility.models.AgilityObstacleModel;
 import net.runelite.client.plugins.microbot.util.gameobject.Rs2GameObject;
 import net.runelite.client.plugins.microbot.util.grounditem.Rs2GroundItem;
 import net.runelite.client.plugins.microbot.util.inventory.Inventory;
+import net.runelite.client.plugins.microbot.util.magic.Rs2Magic;
+import net.runelite.client.plugins.microbot.util.math.Random;
 import net.runelite.client.plugins.microbot.util.models.RS2Item;
 import net.runelite.client.plugins.microbot.util.npc.Rs2Npc;
+import net.runelite.client.plugins.microbot.util.tabs.Rs2Tab;
+import net.runelite.client.plugins.microbot.util.widget.Rs2Widget;
+import net.runelite.client.plugins.skillcalculator.skills.MagicAction;
 import net.runelite.client.plugins.timers.TimersPlugin;
 
 import java.awt.*;
@@ -33,7 +38,7 @@ import static net.runelite.client.plugins.worldmap.AgilityCourseLocation.GNOME_S
 public class AgilityScript extends Script {
 
     public static double version = 1.0;
-    final int MAX_DISTANCE = 2350;
+    final int MAX_DISTANCE = 3350;
 
     public List<AgilityObstacleModel> draynorCourse = new ArrayList<>();
     public List<AgilityObstacleModel> alkharidCourse = new ArrayList<>();
@@ -146,7 +151,12 @@ public class AgilityScript extends Script {
                     currentObstacle = 0;
                     LocalPoint startCourseLocal = LocalPoint.fromWorld(Microbot.getClient(), startCourse);
                     if (playerLocation.distanceTo(startCourseLocal) >= MAX_DISTANCE) {
-                        Microbot.getWalker().walkTo(startCourse, false);
+                        Rs2Tab.switchToMagicTab();
+                        sleep(Random.random(60,100));
+                        Rs2Magic.cast(MagicAction.CAMELOT_TELEPORT);
+                        //Microbot.getMouse().click(Rs2Widget.findWidget("Camelot Teleport").getBounds().getX() + Random.random(-1 , 1), Rs2Widget.findWidget("Camelot Teleport").getBounds().getX() + Random.random(-1 , 1));
+                        sleep(Random.random(200,400));
+                        //sleepUntil(() -> Microbot.getClient().getLocalPlayer().getAnimation() != 714, Random.random(4000,5000));
                         return;
                     }
                 }
@@ -201,7 +211,7 @@ public class AgilityScript extends Script {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
-        }, 0, 100, TimeUnit.MILLISECONDS);
+        }, 0, 200, TimeUnit.MILLISECONDS);
         return true;
     }
 

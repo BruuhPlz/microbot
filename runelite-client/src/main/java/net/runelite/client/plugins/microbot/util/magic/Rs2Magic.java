@@ -112,8 +112,8 @@ public class Rs2Magic {
 
     public static void handleMenuSwapper(MenuEntry menuEntry) {
         if (widgetId == 0) return;
-        menuEntry.setOption("Cast");
-        menuEntry.setIdentifier(1);
+        menuEntry.setOption("Seers'");
+        menuEntry.setIdentifier(2);
         menuEntry.setParam0(-1);
         menuEntry.setTarget("<col=00ff00>" + Rs2Magic.widgetName + "</col>");
         menuEntry.setType(Rs2Magic.widgetAction);

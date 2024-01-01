@@ -1,8 +1,7 @@
-package net.runelite.client.plugins.ogPlugins.ogConstruction;
+package net.runelite.client.plugins.ogPlugins.ogAgility;
 
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.GameObject;
 import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.config.ConfigManager;
@@ -15,41 +14,38 @@ import javax.inject.Inject;
 import java.awt.*;
 
 @PluginDescriptor(
-        name = PluginDescriptor.OG + "Construction",
-        description = "OG Construction plugin",
-        tags = {"og","construction", "microbot"},
+        name = PluginDescriptor.OG + "Agility",
+        description = "OG Agility plugin",
+        tags = {"og","agility", "microbot"},
         enabledByDefault = false
 )
 @Slf4j
-public class ogConstPlugin extends Plugin {
+public class ogAgilityPlugin extends Plugin {
     @Inject
-    private ogConstConfig config;
+    private ogAgilityConfig config;
     @Provides
-    ogConstConfig provideConfig(ConfigManager configManager) {
-        return configManager.getConfig(ogConstConfig.class);
+    ogAgilityConfig provideConfig(ConfigManager configManager) {
+        return configManager.getConfig(ogAgilityConfig.class);
     }
 
     @Inject
     private OverlayManager overlayManager;
     @Inject
-    private ogConstOverlay ogConstOverlay;
+    private ogAgilityOverlay ogAgilityOverlay;
 
     @Inject
-    ogConstScript ogConstScript;
-
-    @Subscribe void onGameTick(GameTick gameTick){ogConstScript.onGameTick(gameTick);}
-
+    ogAgilityScript ogAgilityScript;
 
     @Override
     protected void startUp() throws AWTException {
         if (overlayManager != null) {
-            overlayManager.add(ogConstOverlay);
+            overlayManager.add(ogAgilityOverlay);
         }
-        ogConstScript.run(config);
+        ogAgilityScript.run(config);
     }
 
     protected void shutDown() {
-        ogConstScript.shutdown();
-        overlayManager.remove(ogConstOverlay);
+        ogAgilityScript.shutdown();
+        overlayManager.remove(ogAgilityOverlay);
     }
 }
