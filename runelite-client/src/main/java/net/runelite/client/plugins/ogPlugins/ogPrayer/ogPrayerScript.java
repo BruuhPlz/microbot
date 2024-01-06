@@ -172,16 +172,18 @@ public class ogPrayerScript extends Script {
         return true;
     }
     public void detectPvpPlayer() {
-        this.playersInArea =  Microbot.getClient().getPlayers().size();
-        if(Microbot.getClient().getPlayers().size() > 1){
-            log("===========================DETECTED THAT I NEED TO HOP===========================");
-            needToHop = true;
-            //if(Microbot.getClient().getLocalPlayer().isInteracting()){}
-            //For now turn on attack players to right-click just in case one spawns under you
-            Microbot.getMouse().click(Microbot.getClient().getLocalPlayer().getWorldLocation().getX(),Microbot.getClient().getLocalPlayer().getWorldLocation().getY());
-            sleep(80,120);
-            Microbot.hopToWorld(selectWorldFromList());
-        } else {needToHop = false; Rs2Tab.switchToInventoryTab();}
+        if(inPVPArea()) {
+            this.playersInArea =  Microbot.getClient().getPlayers().size();
+            if(Microbot.getClient().getPlayers().size() > 1){
+                log("===========================DETECTED THAT I NEED TO HOP===========================");
+                needToHop = true;
+                //if(Microbot.getClient().getLocalPlayer().isInteracting()){}
+                //For now turn on attack players to right-click just in case one spawns under you
+                Microbot.getMouse().click(Microbot.getClient().getLocalPlayer().getWorldLocation().getX(),Microbot.getClient().getLocalPlayer().getWorldLocation().getY());
+                sleep(80,120);
+                Microbot.hopToWorld(selectWorldFromList());
+            } else {needToHop = false; Rs2Tab.switchToInventoryTab();}
+        }
     }
     public void onGameTick(GameTick gameTick){
         this.gameTick++;
